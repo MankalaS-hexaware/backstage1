@@ -12,7 +12,7 @@ backend:
   # auth:
   #   keys:
   #     - secret: ${BACKEND_SECRET}
-  baseUrl: http://localhost:7007
+  baseUrl: http://localhost:7008
   listen:
     port: 7007
     # Uncomment the following host directive to bind to specific interfaces
@@ -89,6 +89,12 @@ catalog:
     # Local example template
     - type: file
       target: ../../examples/template/template.yaml
+      rules:
+        - allow: [Template]
+
+      # Local python template
+    - type: url
+      target: https://github.com/MankalaS-hexaware/newrepo/blob/main/Python-gen/template.yaml
       rules:
         - allow: [Template]
 
