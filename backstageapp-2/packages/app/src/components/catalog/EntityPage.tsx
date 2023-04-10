@@ -55,6 +55,7 @@ import {
 
 import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
+import {OpenApiRefProcessor} from '@backstage/plugin-catalog-backend-module-openapi';
 
 const techdocsContent = (
   <EntityTechdocsContent>
@@ -341,6 +342,9 @@ const systemPage = (
         ]}
         unidirectional={false}
       />
+    </EntityLayout.Route>
+    <EntityLayout.Route path="/your-custom-route" title="CustomTitle">
+      < OpenApiRefProcessor/>
     </EntityLayout.Route>
   </EntityLayout>
 );
