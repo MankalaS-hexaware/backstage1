@@ -123,45 +123,45 @@ module.exports = class extends Generator {
         { entityName: entityName, fields: fields }
       );
 
-      // ast actions 
-      // this._updateReducersInStore(entityName);
-      // this._updateNavigationChildren(entityName);
-      // this._updateRoutesChildren(entityName);
+      //ast actions 
+      this._updateReducersInStore(entityName);
+      this._updateNavigationChildren(entityName);
+      this._updateRoutesChildren(entityName);
     }
   }
 
-  // _updateReducersInStore(entityName) {
-  //   const storePath = this.destinationPath("src/store/store.js");
-  //   let originalJsxAstTree = this._readAst(storePath)
+  _updateReducersInStore(entityName) {
+    const storePath = this.destinationPath("src/store/store.js");
+    let originalJsxAstTree = this._readAst(storePath)
 
-  //   let modifiedJsxAstTree = utils.updateStoreAstTree(
-  //     originalJsxAstTree,
-  //     entityName
-  //   );
-  //   this._writeAstToFile(storePath, modifiedJsxAstTree)
-  // }
+    let modifiedJsxAstTree = utils.updateStoreAstTree(
+      originalJsxAstTree,
+      entityName
+    );
+    this._writeAstToFile(storePath, modifiedJsxAstTree)
+  }
    
-  // _updateNavigationChildren(entityName) {
-  //   const navigationPath = this.destinationPath("src/navigations.js");
-  //   let originalJsxAstTree = this._readAst(navigationPath)
+  _updateNavigationChildren(entityName) {
+    const navigationPath = this.destinationPath("src/navigations.js");
+    let originalJsxAstTree = this._readAst(navigationPath)
 
-  //   let modifiedJsxAstTree = utils.updateNavigationAstTree(
-  //     originalJsxAstTree,
-  //     entityName
-  //   );
-  //   this._writeAstToFile(navigationPath, modifiedJsxAstTree)
-  // }
+    let modifiedJsxAstTree = utils.updateNavigationAstTree(
+      originalJsxAstTree,
+      entityName
+    );
+    this._writeAstToFile(navigationPath, modifiedJsxAstTree)
+  }
 
-  // _updateRoutesChildren(entityName) {
-  //   const routesPath = this.destinationPath("src/routes/routes.jsx");
-  //   let originalJsxAstTree = this._readAst(routesPath)
+  _updateRoutesChildren(entityName) {
+    const routesPath = this.destinationPath("src/routes/routes.jsx");
+    let originalJsxAstTree = this._readAst(routesPath)
 
-  //   let modifiedJsxAstTree = utils.updateRoutesAstTree(
-  //     originalJsxAstTree,
-  //     entityName
-  //   );
-  //   this._writeAstToFile(routesPath, modifiedJsxAstTree)
-  // }
+    let modifiedJsxAstTree = utils.updateRoutesAstTree(
+      originalJsxAstTree,
+      entityName
+    );
+    this._writeAstToFile(routesPath, modifiedJsxAstTree)
+  }
 
   writing() {
     var data = this.options.data
