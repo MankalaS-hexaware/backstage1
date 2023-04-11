@@ -40,10 +40,10 @@ spec:
 
     - title: Add Entity Design
       required:
-        - name
+        - entityname
       type: object  
       properties:
-        name:
+        entityname:
           title: EntityName
           type: string
           description: Entity name of the component
@@ -53,18 +53,23 @@ spec:
         EntityDesign:
           title: Entity
           type: array
-          description: Feildname
+          description: Fieldname
           items:
             type: object
             required:
-              - Feildname
+              - name
             properties: 
-              Feildname:
-                title: Feildname
+              name:
+                title: Fieldname
                 type: string
-              Datatype: 
+              datatype: 
                 title: datatype
                 type: string
+                enum:
+                  - number
+                  - string
+                  - integer
+                  - array
             
     - title: Choose a location
       required:
@@ -95,22 +100,9 @@ spec:
           data:
             com_name: '${{ parameters.name }}' 
             entities:
-              - name: employe
-                fields:
-                   - name: name1
-                     datatype: string
-                   - name: email2
-                     datatype: string
-                relations:
-                    - name: student
-                      fields:
-                       - name: name1
-                         datatype: string
-                       - name: email
-                         datatype: string
-               
-        
-
+              - entityName: '${{ parameters.entityname }}'
+              - fields: '${{ parameters.EntityDesign }}'
+                   
     - id: publish
       if: ${{ parameters.dryRun !== true }}
       name: Publish

@@ -1,0 +1,48 @@
+from db.models.<%=  model %> import <%=  model %>
+
+from db.utils import objects_to_df
+from mongoengine import connect
+import pandas as pd
+
+
+def get_<%=  model.toLowerCase() %>(db: connect, close_session: bool = True) -> pd.DataFrame:
+    <%=  model.toLowerCase() %> = <%=  model %>.objects
+    out = objects_to_df(<%=  model.toLowerCase() %>)
+    result = pd.DataFrame(out)
+    if close_session:
+        db.close()
+    return result
+
+
+def insert_<%=  model.toLowerCase() %>(db: connect, <%_
+    for(var i = 0; i<attrs.length; i++){_%>
+<%= attrs[i]["name"] + ": " + attrs[i]["type"]["actual"] + ", "%><%}
+    _%>close_session: bool = True) -> bool:
+    <%=  model.toLowerCase() %> = <%=  model %>(<%_
+        for(var i = 0; i<attrs.length; i++){_%>
+<%= attrs[i]["name"] + "= " + attrs[i]["name"] + (i != attrs.length-1?", ":"")%><%}_%>)
+    <%=  model.toLowerCase() %>.save()
+    if close_session:
+        db.close()
+    return True
+
+
+def update_<%=  model.toLowerCase() %>(db: connect, <%_
+    for(var i = 0; i<attrs.length; i++){_%>
+<%= attrs[i]["name"] + ": " + attrs[i]["type"]["actual"] + ", "%><%}
+    _%>close_session: bool = True) -> bool:
+    <%=  model.toLowerCase() %> = <%=  model %>.objects(<%= attrs[0]["name"]%>=<%=attrs[0]["name"]%>)
+    <%=  model.toLowerCase() %>.update(<%_
+        for(var i = 1; i<attrs.length; i++){_%>
+<%= attrs[i]["name"] + "= " + attrs[i]["name"] + (i != attrs.length-1?", ":"")%><%}_%>)
+    if close_session:
+        db.close()
+    return True
+
+
+def delete_<%=  model.toLowerCase() %>_by_<%= attrs[0]["name"]_%>(db: connect, <%= attrs[0]["name"]_%>: <%= attrs[0]["type"]["actual"]_%>, close_session: bool = True) -> bool:
+    <%=  model.toLowerCase() %> = <%=  model %>.objects(<%= attrs[0]["name"]_%>=<%= attrs[0]["name"]_%>)
+    <%=  model.toLowerCase() %>.delete()
+    if close_session:
+        db.close()
+    return True

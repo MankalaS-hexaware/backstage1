@@ -1,0 +1,17 @@
+from typing import List
+from pydantic import BaseModel
+
+
+class <%=model%>Row(BaseModel):
+<%_ for(var i = 0; i < attrs.length; i++){%>
+    <%- attrs[i]["name"]%>: <%- attrs[i]["type"]["actual"]%><%}%>
+
+
+class <%=model%>RowUpdate(BaseModel):
+<%_ keys = Object.keys(attrs)
+    for(var i = 1; i < keys.length; i++){%>
+    <%- attrs[i]["name"]%>: <%- attrs[i]["type"]["actual"]%><%}%>
+
+
+class <%=model%>(BaseModel):
+    out: List[<%=model%>Row]

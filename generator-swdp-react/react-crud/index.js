@@ -8,6 +8,7 @@ module.exports = class extends Generator {
     super(args, opts);
     // to beautify the generated code from yeoman
     this.queueTransformStream(prettier());
+    console.log("entitiess",this.options.data.entities);
   }
 
   _pascalCase = (word) => word.replace(/\w/, c => c.toUpperCase());

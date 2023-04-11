@@ -1,0 +1,49 @@
+import traceback
+import logging
+from fastapi import APIRouter, HTTPException
+from core.logger import logger
+from business import <%=  model %>Logic
+from schema import <%=  model %>
+
+router = APIRouter()
+
+
+@router.get('/<%=  model.toLowerCase() %>',
+            response_model=<%=  model %>.<%=  model %>)
+def api_fetch_<%=  model %>():
+    try:
+        return <%=  model %>Logic.fetch_<%=  model %>()
+    except:
+        print(traceback.format_exc())
+        logger.exception(traceback.format_exc())
+        raise HTTPException(status_code=500, detail="Error")
+
+
+@router.post('/<%=  model.toLowerCase() %>/insert')
+def api_add_<%=  model %>(<%=  model %>: <%=  model %>.<%=  model %>Row):
+    try:
+        return <%=  model %>Logic.add_<%=  model %>(<%=  model %>=<%=  model %>)
+    except:
+        print(traceback.format_exc())
+        logger.exception(traceback.format_exc())
+        raise HTTPException(status_code=500, detail="Error")
+
+
+@router.put('/<%=  model.toLowerCase() %>/update/{<%=attrs[0]["name"]%>}')
+def api_update_<%=  model %>(<%=  attrs[0]["name"] %>: <%=attrs[0]["type"]["actual"]%>, <%=  model %>: <%=  model %>.<%=  model %>RowUpdate):
+    try:
+        return <%=  model %>Logic.update_<%=  model %>(<%=attrs[0]["name"]%>, <%=  model %>=<%=  model %>)
+    except:
+        print(traceback.format_exc())
+        logger.exception(traceback.format_exc())
+        raise HTTPException(status_code=500, detail="Error")
+
+
+@router.delete('/<%=  model.toLowerCase() %>/delete/{<%=attrs[0]["name"]%>}')
+def api_delete_<%=  model %>_by_<%=attrs[0]["name"]%>(<%=attrs[0]["name"]%>: <%=attrs[0]["type"]["actual"]%>):
+    try:
+        return <%=  model %>Logic.remove_<%=  model %>_by_<%=attrs[0]["name"]%>(<%=attrs[0]["name"]%>)
+    except:
+        print(traceback.format_exc())
+        logger.exception(traceback.format_exc())
+        raise HTTPException(status_code=500, detail="Error")

@@ -1,0 +1,36 @@
+from business.utils import convert_dict_to_model
+from schema import <%=  model %>
+from db.connection import get_db
+from db.crud import <%=  model %>CRUD
+
+
+def fetch_<%=  model %>():
+    rows = <%=  model %>CRUD.get_<%=  model.toLowerCase() %>(get_db())
+    if len(rows) == 0:
+        return <%=  model %>.<%=  model %>(out=[])
+    rows = rows[<%-  JSON.stringify(attrs.map(t => t.name)) %>]
+    list_of_dicts = rows.to_dict(orient='records')
+    emps = convert_dict_to_model(list_of_dicts, <%=  model %>.<%=  model %>Row)
+    <%=  model %>_out = <%=  model %>.<%=  model %>(out=emps)
+    return <%=  model %>_out
+
+
+def add_<%=  model %>(<%=  model %>: <%=  model %>.<%=  model %>Row):
+    <% for(var i = 0; i < attrs.length; i++){%>
+    <%= attrs[i]["name"]%> = <%=  model %>.<%= attrs[i]["name"]%><% }%>
+    ret = <%=  model %>CRUD.insert_<%=  model.toLowerCase() %>(get_db(),<%= attrs.map(t => t.name)%>)
+    return {"status": "success" if ret else "failed"}
+
+
+def update_<%=  model %>(<%= attrs[0]["name"]%>: <%= attrs[0]["type"]["actual"]%>, <%=  model %>: <%=  model %>.<%=  model %>RowUpdate):
+    <%= attrs[0]["name"]%> = <%= attrs[0]["name"]_%>
+    <% {
+        for(var i = 1; i < attrs.length; i++){%>
+    <%= attrs[i]["name"]%> = <%=  model %>.<%= attrs[i]["name"]%><% }}%>
+    ret = <%=  model %>CRUD.update_<%=  model.toLowerCase() %>(get_db(), <%= attrs.map(t => t.name)%>)
+    return {"status": "success" if True else "failed"}
+
+
+def remove_<%=  model %>_by_<%=attrs[0]["name"]%>(<%= attrs[0]["name"]%>: <%= attrs[0]["type"]["actual"]%>):
+    ret = <%=  model %>CRUD.delete_<%=  model.toLowerCase() %>_by_<%=attrs[0]["name"]%>(get_db(), <%= attrs[0]["name"]%>)
+    return {"status": "success" if ret else "failed"}

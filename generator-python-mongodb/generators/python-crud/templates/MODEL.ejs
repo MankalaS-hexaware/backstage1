@@ -1,0 +1,10 @@
+from mongoengine import DynamicDocument
+from mongoengine import IntField, StringField, DecimalField, BooleanField
+
+
+class <%=model%>(DynamicDocument):
+<%_
+    for(var i = 0; i < attrs.length; i++){%>
+    <%- attrs[i]["name"]%> = <%- attrs[i]["type"]["mongofield"]%>()<%}%>
+
+    meta = {'db_alias': '<%=project%>', 'collection': '<%-collection%>'}

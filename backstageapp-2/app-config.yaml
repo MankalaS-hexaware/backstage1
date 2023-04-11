@@ -15,8 +15,7 @@ backend:
   baseUrl: http://localhost:7007
   reading:
     allow:
-      - host: https://petstore.swagger.io/v2/swagger.json
-      - host: 'https://api.apis.guru/v2/openapi.yaml'
+      - host: '*.apis.guru'
       - host: example.net
         paths: ['/api/']
   listen:
@@ -98,13 +97,21 @@ catalog:
       rules:
         - allow: [Template]
     - type: file
+      target: ../../examples/template/nest-template.yaml
+      rules:
+        - allow: [Template]    
+    - type: file
       target: ../../examples/template/template-yo.yaml
       rules:
         - allow: [Template]    
     - type: file
       target: ../../examples/template/template-crud.yaml
       rules:
-        - allow: [Template]        
+        - allow: [Template] 
+    - type: file
+      target: ../../examples/template/python-template.yaml
+      rules:
+        - allow: [Template]            
   # Local python template
     - type: url
       target: https://github.com/MankalaS-hexaware/newrepo/blob/main/Python-gen/template.yaml
