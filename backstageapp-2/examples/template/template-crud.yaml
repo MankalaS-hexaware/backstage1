@@ -100,8 +100,8 @@ spec:
           data:
             com_name: '${{ parameters.name }}' 
             entities:
-              - entityName: '${{ parameters.entityname }}'
-              - fields: '${{ parameters.EntityDesign }}'
+              name: '${{ parameters.entityname }}'
+              fields: '${{ parameters.EntityDesign }}'
                    
     - id: publish
       if: ${{ parameters.dryRun !== true }}

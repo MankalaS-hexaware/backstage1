@@ -8,7 +8,8 @@ module.exports = class extends Generator {
     super(args, opts);
     // to beautify the generated code from yeoman
     this.queueTransformStream(prettier());
-    console.log("entitiess",this.options.data.entities);
+    let entity=this.options.data.entities
+    console.log("entitiess",Object.values(entity));
   }
 
   _pascalCase = (word) => word.replace(/\w/, c => c.toUpperCase());
@@ -30,9 +31,12 @@ module.exports = class extends Generator {
     this.fs.write(path, modifiedCode, options);
   }
   _addEntity(project, entities) {
-    for (let i = 0; i < entities.length; i++) {
-      var entityName = entities[i]["name"];
-      var fields = entities[i]["fields"];
+    console.log("entity1",entities.name);
+    console.log("entity12",entities.fields[0]);
+
+      var entityName = entities.name;
+      var fields = entities.fields;
+      console.log("fields",fields,entityName);
       this.fs.copyTpl(
         this.templatePath("components/store/reduxSlice.ejs"),
         this.destinationPath(
@@ -122,46 +126,50 @@ module.exports = class extends Generator {
         ),
         { entityName: entityName, fields: fields }
       );
+      this.fs.copyTpl(
+        this.templatePath("catalog-info.yaml"),
+        this.destinationPath("catalog-info.yaml")
+      );
 
-      //ast actions 
-      this._updateReducersInStore(entityName);
-      this._updateNavigationChildren(entityName);
-      this._updateRoutesChildren(entityName);
-    }
+        //ast actions 
+      // this._updateReducersInStore(entityName);
+      // this._updateNavigationChildren(entityName);
+      // this._updateRoutesChildren(entityName);
+    
   }
 
-  _updateReducersInStore(entityName) {
-    const storePath = this.destinationPath("src/store/store.js");
-    let originalJsxAstTree = this._readAst(storePath)
+  // _updateReducersInStore(entityName) {
+  //   const storePath = this.destinationPath("src/store/store.js");
+  //   let originalJsxAstTree = this._readAst(storePath)
 
-    let modifiedJsxAstTree = utils.updateStoreAstTree(
-      originalJsxAstTree,
-      entityName
-    );
-    this._writeAstToFile(storePath, modifiedJsxAstTree)
-  }
+  //   let modifiedJsxAstTree = utils.updateStoreAstTree(
+  //     originalJsxAstTree,
+  //     entityName
+  //   );
+  //   this._writeAstToFile(storePath, modifiedJsxAstTree)
+  // }
    
-  _updateNavigationChildren(entityName) {
-    const navigationPath = this.destinationPath("src/navigations.js");
-    let originalJsxAstTree = this._readAst(navigationPath)
+  // _updateNavigationChildren(entityName) {
+  //   const navigationPath = this.destinationPath("src/navigations.js");
+  //   let originalJsxAstTree = this._readAst(navigationPath)
 
-    let modifiedJsxAstTree = utils.updateNavigationAstTree(
-      originalJsxAstTree,
-      entityName
-    );
-    this._writeAstToFile(navigationPath, modifiedJsxAstTree)
-  }
+  //   let modifiedJsxAstTree = utils.updateNavigationAstTree(
+  //     originalJsxAstTree,
+  //     entityName
+  //   );
+  //   this._writeAstToFile(navigationPath, modifiedJsxAstTree)
+  // }
 
-  _updateRoutesChildren(entityName) {
-    const routesPath = this.destinationPath("src/routes/routes.jsx");
-    let originalJsxAstTree = this._readAst(routesPath)
+  // _updateRoutesChildren(entityName) {
+  //   const routesPath = this.destinationPath("src/routes/routes.jsx");
+  //   let originalJsxAstTree = this._readAst(routesPath)
 
-    let modifiedJsxAstTree = utils.updateRoutesAstTree(
-      originalJsxAstTree,
-      entityName
-    );
-    this._writeAstToFile(routesPath, modifiedJsxAstTree)
-  }
+  //   let modifiedJsxAstTree = utils.updateRoutesAstTree(
+  //     originalJsxAstTree,
+  //     entityName
+  //   );
+  //   this._writeAstToFile(routesPath, modifiedJsxAstTree)
+  // }
 
   writing() {
     var data = this.options.data

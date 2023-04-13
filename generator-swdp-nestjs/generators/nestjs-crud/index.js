@@ -11,9 +11,9 @@ module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
     console.log("entitinest",this.options.data.entities);
-    this.tsProject = new Project({
-      tsConfigFilePath: this.destinationPath(`tsconfig.json`),
-    });
+    // this.tsProject = new Project({
+    //   tsConfigFilePath: this.destinationPath(`tsconfig.json`),
+    // });
   }
 
   initializing() {
@@ -120,9 +120,9 @@ module.exports = class extends Generator {
     // registering the entity's module in the app module
 
     // fetching app.module.ts file
-    const sourceFile = this.tsProject.getSourceFile(
-      this.destinationPath(`src/app.module.ts`)
-    );
+    // const sourceFile = this.tsProject.getSourceFile(
+    //   this.destinationPath(`src/app.module.ts`)
+    // );
 
     // adding imports for module and entity
     const importDeclarations = this.entities.reduce(
@@ -162,6 +162,6 @@ module.exports = class extends Generator {
     );
     importArray.addElements(importArrayElements);
     sourceFile.save();
-    this.tsProject.save();
+   // this.tsProject.save();
   }
 };
